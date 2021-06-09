@@ -28,18 +28,24 @@ import { getHeatmapTableSelector } from './get_heatmap_table';
 
 /**
  * @internal
- * Gets color scale based on specification and values range.
+ * Gets the optimal width to pad the x axis on the right
+ * based on the text width or on the configured overflow.
  */
 export const getXAxisRightOverflow = createCachedSelector(
   [getHeatmapConfigSelector, getHeatmapTableSelector],
-  ({ xAxisLabel: { fontSize, fontFamily, padding, formatter, width }, timeZone }, { xDomain }): number => {
+  (
+    { xAxisLabel: { fontSize, fontFamily, padding, formatter, width }, xAxisOverflow, timeZone },
+    { xDomain },
+  ): number => {
     if (xDomain.type !== ScaleType.Time) {
       return 0;
     }
-    if (typeof width === 'number') {
-      return width / 2;
+    // Use the configured overflow if xAxisOverflow.right is defined
+    if (typeof xAxisOverflow?.right === 'number') {
+      return xAxisOverflow.right;
     }
 
+    // Else compute the optimal width based on the text size of the last tick label
     const timeScale = new ScaleContinuous(
       {
         type: ScaleType.Time,

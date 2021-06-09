@@ -28,6 +28,15 @@ import { Cell } from './viewmodel_types';
 export interface Config {
   width: Pixels;
   height: Pixels;
+  /**
+   * Override the computed left and right overflow margin
+   * Helpful if fixed positioning is required
+   * e.g. ending right position will be overall width - xAxisOverflow.right
+   */
+  xAxisOverflow?: {
+    right?: number;
+    left?: number;
+  };
   margin: { left: SizeRatio; right: SizeRatio; top: SizeRatio; bottom: SizeRatio };
   maxRowHeight: Pixels;
   maxColumnWidth: Pixels;

@@ -48,6 +48,11 @@ export const config: Config = {
 
   timeZone: 'UTC',
 
+  xAxisOverflow: {
+    left: undefined,
+    right: undefined,
+  },
+
   xAxisLabel: {
     name: 'X Value',
     visible: true,
